@@ -12,7 +12,7 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(express.json);
+app.use(express.json);// allows access to json files present in body
 
 app.use(authRoutes);
 
@@ -20,8 +20,13 @@ app.use(User);
 
 app.use(express.static("public"));// to serve up static files
 
-app.listen(3000, ()=> {
-    console.log("This app runs on port 3000");
+const DBURI = "";
+//connect to database
+
+// mongoose.connect(DBURI, ); //incomplete
+
+app.listen(3030, ()=> {
+    console.log("This app runs on port 3030");
 })
 
 let newItems = [];// The position of this empty list is very important.

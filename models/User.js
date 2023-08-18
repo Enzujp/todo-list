@@ -1,6 +1,6 @@
 // require mongoose for database creation
 const mongoose = require("mongoose");
-
+const bcrypt = require("bcrypt");
 
 // require email validator using deconstruction.
 
@@ -23,9 +23,23 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+// hash passwords using hooks
+userSchema.pre('save', async function (next) {
+    console.log("Testing this out before creating", this);// logging and referencing instance
+    const salt = await bcrypt.genSalt();//takes a while to do this, hence it is async
+    this.password = await bcrypt.hash(this.password, salt);// hashes instance of password and adds salt(hehe)
+    next();
+})
+
+
+// function to be performed after creating user
+userSchema.post('save', function(doc, next) {
+    console.log("New User has been created successfully", doc);
+    next();
+})
+
 
 // create model based on Schema.
-
 const User = mongoose.model('user', userSchema); // takes singular collection name and schema name as arguments.
 
 module.exports = User;

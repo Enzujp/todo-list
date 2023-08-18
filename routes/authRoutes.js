@@ -1,7 +1,7 @@
 // require router modules from express package
 const { Router } = require("express");
 
-const authController = require("../controllers/authController")
+const authController = require("../controllers/authController");
 
 // set extracted router module to a const for use.
 
