@@ -21,7 +21,7 @@ const handleErrors = (err) => {
 // create functions using exportable modules which would be handled in authroutes
 
 module.exports.signup_get = (req, res) => {
-    res.send("Signup page");
+    res.render("signup");
 }
 
 module.exports.login_get = (req, res) => {

@@ -1,35 +1,29 @@
-const express = require("express");
+const express = require('express');
+const mongoose = require('mongoose');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
-const authRoutes = require("./routes/authRoutes");
 
-const User = require("./models/User");
 
-app.set("view engine", "ejs" ); //must place this below express, i.e after express app has been declared.
+// middleware
+app.use(express.static('public'));
+app.use(express.json());
 
-const bodyParser = require("body-parser");
+// view engine
+app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+// database connection
+// const dbURI = "mongodb+srv://jay:zuzu@cluster0.zyzefdv.mongodb.net/" //make collection names plural
+// mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then((result) => app.listen(3000), console.log("This finally works baby"))
+//   .catch((err) => console.log(err));
+app.listen(8000, console.log("this works"))
 
-app.use(express.json);// allows access to json files present in body
+let newItems = []; // The position of this empty list is very important.
 
+// routes
 app.use(authRoutes);
-
-app.use(User);
-
-app.use(express.static("public"));// to serve up static files
-
-const DBURI = "";
-//connect to database
-
-// mongoose.connect(DBURI, ); //incomplete
-
-app.listen(3030, ()=> {
-    console.log("This app runs on port 3030");
-})
-
-let newItems = [];// The position of this empty list is very important.
 
 app.get('/', (req, res)=>{
     let today = new Date();
@@ -51,3 +45,13 @@ app.post('/', (req, res)=> {
 
     res.redirect('/'); // redirects to the home route, that contains code to handle received variable.
 })
+
+
+
+// cookies
+// const cookieParser = require('cookie-parser');
+// app.use(cookieParser());
+
+
+
+
